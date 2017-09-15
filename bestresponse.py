@@ -20,3 +20,9 @@ def BR_plot(pop, dist, alpha, beta, delta):
     plt.legend()
     plt.xlabel("player 1's entry probability")
     plt.ylabel("player 2's entry probability")
+    
+# find equilibrium
+def findequi(pop, dist, alpha, beta, delta):
+    grid_num = 200
+    grid = np.linspace(0, 1, grid_num)
+    return [(br(br2(i, pop, dist, alpha, beta, delta), pop, dist, alpha, beta, delta), br2(i, pop, dist, alpha, beta, delta)) for i in grid if (br1(br2(i, pop, dist, alpha, beta, delta), pop, dist, alpha, beta, delta) - i)**2 < 1.0e-20]
