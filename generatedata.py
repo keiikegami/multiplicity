@@ -3,6 +3,13 @@ import numpy as np
 import pandas as pd
 import bestresponse as br
 
+def entry(entry_prob):
+    rv = np.random.rand()
+    if rv < entry_prob:
+        return 1
+    else:
+        return 0
+
 # equi_selectionは3つの均衡がモデルから得られた時に左側の均衡を選択する確率のパラメータ。defaultは0.5
 def generate(alpha, beta, delta, equi_selection = 0.5, mean_pop = 1, mean_dist = [1.2, 0.8], sample_size = 10000, tane = 12345):
     sample_size = 10000
@@ -14,7 +21,7 @@ def generate(alpha, beta, delta, equi_selection = 0.5, mean_pop = 1, mean_dist =
     # dist
     dist = np.zeros((sample_size, 2))
     dist[:, 0] = truncnorm.rvs(0, 5, loc = mean_dist[0], size = sample_size)
-    dist[:, 1] = truncnorm.rvs(0, 5, loc = meandist[1], size = sample_size)
+    dist[:, 1] = truncnorm.rvs(0, 5, loc = mean_dist[1], size = sample_size)
 
     # 乱数の箱
     RV = np.random.rand(sample_size)
@@ -33,7 +40,7 @@ def generate(alpha, beta, delta, equi_selection = 0.5, mean_pop = 1, mean_dist =
 
         # 均衡の数で場合分け
         if len(equilibria) == 3:
-            if RV[i] < equi_selectinon:
+            if RV[i] < equi_selection:
                 probs[i, :] = equilibria[0]
                 equi_type[i] = 1
             else:
@@ -60,4 +67,8 @@ def generate(alpha, beta, delta, equi_selection = 0.5, mean_pop = 1, mean_dist =
     
     # 出力
     data = pd.DataFrame(param1_data)
+    data.columns = ["pop", "dist1", "dist2", "entryprob1", "entryprob2", "equitype"]
+    data["entry1"] = data["entryprob1"].apply(entry)
+    data["entry2"] = data["entryprob2"].apply(entry)
     data.to_csv(str(alpha)+"-"+str(beta)+"-"+str(delta)+".csv")
+    
