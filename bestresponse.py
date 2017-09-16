@@ -23,6 +23,6 @@ def BR_plot(pop, dist, alpha, beta, delta):
     
 # find equilibrium
 def findequi(pop, dist, alpha, beta, delta):
-    grid_num = 200
+    grid_num = 1000
     grid = np.linspace(0, 1, grid_num)
-    return [(br(br2(i, pop, dist, alpha, beta, delta), pop, dist, alpha, beta, delta), br2(i, pop, dist, alpha, beta, delta)) for i in grid if (br1(br2(i, pop, dist, alpha, beta, delta), pop, dist, alpha, beta, delta) - i)**2 < 1.0e-20]
+    return [(br1(br2(i, pop, dist, alpha, beta, delta), pop, dist, alpha, beta, delta), br2(i, pop, dist, alpha, beta, delta)) for i in grid if (br1(br2(i, pop, dist, alpha, beta, delta), pop, dist, alpha, beta, delta) - i)**2 < 1.0e-7]
