@@ -70,5 +70,6 @@ def generate(alpha, beta, delta, equi_selection = 0.5, mean_pop = 1, mean_dist =
     data.columns = ["pop", "dist1", "dist2", "entryprob1", "entryprob2", "equitype"]
     data["entry1"] = data["entryprob1"].apply(entry)
     data["entry2"] = data["entryprob2"].apply(entry)
+    data["single"] = data["equitype"].apply(lambda x:1 if x == 0.0 else 0)
     data.to_csv(str(alpha)+"-"+str(beta)+"-"+str(delta)+".csv")
     
