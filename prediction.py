@@ -58,8 +58,8 @@ def entry_predict(data):
 # scatter : "real entry probability vs logit "and "real entry probability vs polynomial"
 # have to do "entry_predict" before this
 def scatter(data):
-    probs1 = df1.loc[:, ["entryprob1", "logit_entry1", "poly_entry1"]]
-    probs2 = df1.loc[:, ["entryprob2", "logit_entry2", "poly_entry2"]]
+    probs1 = data.loc[:, ["entryprob1", "logit_entry1", "poly_entry1"]]
+    probs2 = data.loc[:, ["entryprob2", "logit_entry2", "poly_entry2"]]
 
     fig, axes = plt.subplots(2, len(probs1.columns.values)-1, sharey=True, figsize=(20, 20))
 
